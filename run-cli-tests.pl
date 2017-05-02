@@ -142,6 +142,9 @@ sub read_test_file
     open(my $test_fh, $test_file);
 
     my $command = readline $test_fh;
+
+    die "Empty command in $test_file!\n" unless $command;
+
     $command = "./$command" unless $^O eq 'MSWin32';
     $command =~ s/TEST_DATA_DIR/$test_data_dir/g;
 

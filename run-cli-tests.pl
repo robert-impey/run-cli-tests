@@ -31,6 +31,7 @@ use Capture::Tiny qw/capture/;
     print "Searching $dir\n" if $verbose;
 
     foreach my $program_dir (File::Find::Rule->directory->in($dir)) {
+		# Skip Unix hidden directories
         $program_dir =~ m{(?:\\|/)\.} && next;
 
         chdir $program_dir or die $!;
@@ -149,7 +150,8 @@ sub read_test_file
     $command =~ s/TEST_DATA_DIR/$test_data_dir/g;
 
     print "Command: $command\n" if $verbose;
-
+	
+	# Ignore the second line of the test file.
     readline $test_fh;
 
     my $test_output = '';
